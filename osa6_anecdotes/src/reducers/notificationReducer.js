@@ -1,4 +1,4 @@
-const notification = 'This is the message.'
+const notification = null
 
 const notificationReducer = (state = notification, action) => {
   switch (action.type) {

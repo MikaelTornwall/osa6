@@ -4,9 +4,7 @@ import PropTypes from 'prop-types'
 class Notification extends React.Component {
   render() {
     const style = {
-      border: 'solid',
-      padding: 10,
-      borderWidth: 1
+      color: 'green'
     }
     return (
       <div style={style}>

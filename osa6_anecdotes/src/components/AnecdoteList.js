@@ -1,15 +1,19 @@
 import React from 'react'
-import addVote from '../reducers/anecdoteReducer'
-import notificationChange from '../reducers/notificationReducer'
+import { addVote } from '../reducers/anecdoteReducer'
+import { notificationChange } from '../reducers/notificationReducer'
 import PropTypes from 'prop-types'
 
 class AnecdoteList extends React.Component {
   handleVote = (anecdote) => () => {
-    console.log('Anecdote: ', anecdote.content)
-    console.log('Id: ', anecdote.id)
-    const notification = `Anecdote ${anecdote.content} has been upvoted.`
+    const id = anecdote.id
+    const content = anecdote.content
+    const notification = `Anecdote "${anecdote.content}" has been upvoted.`
+    console.log('Anecdote: ', content)
+    console.log('Id: ', id)
+    console.log(notification)
+
     this.context.store.dispatch(
-      addVote(anecdote.id)
+      addVote(id)
     )
 
     this.context.store.dispatch(
@@ -24,12 +28,12 @@ class AnecdoteList extends React.Component {
   }
 
   render() {
-    const anecdotes = this.context.store.getState().anecdote
-    console.log('Anekdootit: ', anecdotes)
+    const { anecdote, filter } = this.context.store.getState()
+    console.log('Anekdootit: ', anecdote)
     return (
       <div>
         <h2>Anecdotes</h2>
-        {anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
+        {anecdote.filter(a => a.content.toLowerCase().indexOf(filter.toLowerCase()) > -1).sort((a, b) => b.votes - a.votes).map(anecdote =>
           <div key={anecdote.id}>
             <div>
               {anecdote.content}

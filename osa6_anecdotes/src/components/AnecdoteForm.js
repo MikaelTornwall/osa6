@@ -7,7 +7,7 @@ class AnecdoteForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const content = e.target.anecdote.value
-    const notification = `New ancedote ${content} has been added.`
+    const notification = `New ancedote "${content}" has been added.`
     this.context.store.dispatch(
       createAnecdote(content)
     )
