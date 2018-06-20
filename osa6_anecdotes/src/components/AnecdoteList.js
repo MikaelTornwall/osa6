@@ -3,17 +3,19 @@ import Filter from './Filter'
 import { addVote } from '../reducers/anecdoteReducer'
 import { notificationChange } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
+import anecdoteService from '../services/anecdotes'
 
 class AnecdoteList extends React.Component {
-  handleVote = (anecdote) => () => {
+  handleVote = (anecdote) => async () => {
     const id = anecdote.id
     const content = anecdote.content
     const notification = `Anecdote "${anecdote.content}" has been upvoted.`
     console.log('Anecdote: ', content)
     console.log('Id: ', id)
     console.log(notification)
-
-    this.props.addVote(id)
+    const newVote = await anecdoteService.update(anecdote)
+    console.log("newVote:", newVote)
+    this.props.addVote(newVote.id)
     this.props.notificationChange(notification)
     setTimeout(() => this.props.notificationChange(null), 5000)
   }
